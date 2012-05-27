@@ -49,16 +49,16 @@ function load_images(options){
 					newimg = new Image()
 					newimg.src = "http://social.apps.lv/image.php?w=196&zc=2&src="+encodeURIComponent(item['europeana:object'])
 					newimg.onload = function(){
-							var subjects = []
-							$.each(item['dc:subject'], function(i){
-								subjects.push("<a href='/?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
-							})
+						var subjects = []
+						$.each(item['dc:subject'], function(i){
+							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
+						})
 						//if(this.width == 200){
 							$("#tiles").append(
 								"<li><a class='imagepopup' href='#popup'><img width='"+this.width+
 								"' height='"+this.height+
-								"' data-subjects='"+encodeURIComponent(subjects.join())+
-								"' data-description='"+encodeURIComponent(item['dc:description'])+
+								"' data-subjects=\""+encodeURIComponent(subjects.join(", "))+
+								"\" data-description='"+encodeURIComponent(item['dc:description'])+
 								"' data-originaluri='"+item['europeana:uri']+
 								"' data-provider='"+item['europeana:provider']+
 								"' data-country='"+item['europeana:country']+
@@ -117,7 +117,7 @@ $(function(){
 		return false
 	})
 	$("body").on("click", "#fancybox-close", function(){
-		history.pushState(null, null, "/?q="+encodeURIComponent(searchTerm))
+		history.pushState(null, null, "/search?q="+encodeURIComponent(searchTerm))
 	})
 })
 String.prototype.capitalize = function(){
