@@ -50,9 +50,13 @@ function load_images(options){
 					newimg.src = "http://social.apps.lv/image.php?w=196&zc=2&src="+encodeURIComponent(item['europeana:object'])
 					newimg.onload = function(){
 						var subjects = []
-						$.each(item['dc:subject'], function(i){
-							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
-						})
+						if(typeof(item['dc:subject']) == "object"){
+							$.each(item['dc:subject'], function(i){
+								subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
+							})
+						} else if(typeof(item['dc:subject']) == "string") {
+							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'])+"'>"+item['dc:subject']+"</a>")
+						}
 						//if(this.width == 200){
 							$("#tiles").append(
 								"<li><a class='imagepopup' href='#popup'><img width='"+this.width+
@@ -101,8 +105,12 @@ $(function(){
 			$("#datacountry").html($(this).children("img").data("country").capitalize())
 			$("#dataprovider").html($(this).children("img").data("provider"))
 			$("#dataoriginaluri").html('<a target="_blank" href="'+$(this).children("img").data("originaluri")+'">'+$(this).children("img").data("originaluri")+'</a>')
-			$("#datasubjects").html(decodeURIComponent($(this).children("img").data("subjects")))
-			console.log($(this).children("img").data("subjects"))
+			if($(this).children("img").data("subjects").length){
+				$("#datasubjects").prev("lh").show()
+				$("#datasubjects").html(decodeURIComponent($(this).children("img").data("subjects")))
+			} else {
+				$("#datasubjects").prev("lh").hide()
+			}
 			if($(this).children("img").data("description") != undefined){
 				$("#datadescription").html(decodeURIComponent($(this).children("img").data("description")))
 			}

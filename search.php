@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo isset($_GET['q'])? ($_GET['q']." - "):""; ?>Europ.in - explore and share Europeana</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/assets/css/reset.css" />
 	<link rel="stylesheet" href="/assets/css/style.css" />
 	<link rel="stylesheet" href="/assets/css/bootstrap.css" />
@@ -89,9 +90,13 @@ endif;
 					$("#dataprovider").html(item['europeana:country'].capitalize())
 					$("#dataoriginaluri").html('<a target="_blank" href="'+item['europeana:uri']+'">'+item['europeana:uri']+'</a>')
 					var subjects = []
-					$.each(item['dc:subject'], function(i){
-						subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
-					})
+					if(typeof(item['dc:subject']) == "object"){
+						$.each(item['dc:subject'], function(i){
+							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
+						})
+					} else if(typeof(item['dc:subject']) == "string") {
+						subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'])+"'>"+item['dc:subject']+"</a>")
+					}
 					$("#datasubjects").html(subjects.join(", "));
 					if(item['dc:description'] != undefined){
 						$("#datadescription").html(item['dc:description'].toString())
