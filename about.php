@@ -17,7 +17,7 @@
 			<input type="text" id="q" name="q" value="" class="search_bar" />
 			<button id="s" class="btn btn-small">Search</button>
 		</form>
-		<div id="count"></div>
+		<a href="http://europeana.eu" id="header_europeana"></a>
 	</div>
 	<div id="main" class="clearfix">
 		<div class="about">
