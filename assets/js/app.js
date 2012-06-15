@@ -53,7 +53,8 @@ function load_images(){
 				objectsLoaded++
 				if(item['europeana:object'] != undefined){
 					newimg = new Image()
-					newimg.src = "http://openshift.apps.lv/image.php?w=150&zc=2&src="+encodeURIComponent(item['europeana:object'])
+					//newimg.src = "http://openshift.apps.lv/image.php?w=150&zc=2&src="+encodeURIComponent(item['europeana:object'])
+					newimg.src = item['europeana:object']
 					newimg.onload = function(){
 						imagesLoaded++
 						var subjects = []
@@ -76,7 +77,8 @@ function load_images(){
 							"' data-creator='"+escape(item['dc:creator'])+
 							"' data-imgsrc='"+escape(item['europeana:object'].replace(/\s/g,"%20"))+
 							"' data-title='"+escape(item['dc:title'])+
-							"' src='http://openshift.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
+							//"' src='http://openshift.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
+							"' src='"+item['europeana:object'].replace(/\s/g,"%20").replace("'","%27")+
 							"' /></a></li>")
 						if(handler) handler.wookmarkClear()
 						wookmarking()
