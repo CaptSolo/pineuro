@@ -95,6 +95,7 @@ a:hover { text-decoration: underline; }
 	width: 180px;
 	height: 32px;
 	display: block;
+	background: url("/assets/images/poweredyeuropeana-white.png") no-repeat center center;
 }
 
 /** Grid container */
