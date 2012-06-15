@@ -40,6 +40,7 @@ endif;
 			<button id="s" class="btn btn-small">Search</button>
 		</form>
 		<div id="count"></div>
+		<a href="http://europeana.eu" id="header_europeana"></a>
 	</div>
 	<div id="main" class="clearfix">
 		<ul id="tiles"></ul>

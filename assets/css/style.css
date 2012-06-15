@@ -87,7 +87,15 @@ a:hover { text-decoration: underline; }
 	overflow: hidden;
 	opacity: 0;
 }
-#header #count { float: right; margin: 8px 10px 0 0; color: #fff; font-size: 20px; }
+#header #count { float: right; margin: 8px 10px 0 0; color: #fff; font-size: 20px; display: none; }
+
+#header_europeana {
+	float: right;
+	margin: 0 10px 0 0;
+	width: 180px;
+	height: 32px;
+	display: block;
+}
 
 /** Grid container */
 #main { position: relative; margin: 50px 0px 30px; }
