@@ -33,8 +33,7 @@ function wookmarking(){
 	$('#tiles li').wookmark({
 		autoResize: true,
 		container: $('#main'),
-		offset: 4,
-		itemWidth: 150
+		offset: 4
 	})
 	fancing()
 }
