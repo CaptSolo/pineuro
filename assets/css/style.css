@@ -91,7 +91,7 @@ a:hover { text-decoration: underline; }
 
 #header_europeana {
 	float: right;
-	margin: 0 10px 0 0;
+	margin: 3px 10px 0 0;
 	width: 180px;
 	height: 32px;
 	display: block;
