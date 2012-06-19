@@ -53,7 +53,7 @@ function load_images(){
 				objectsLoaded++
 				if(item['europeana:object'] != undefined){
 					newimg = new Image()
-					newimg.src = "http://openshift.apps.lv/image.php?w=150&zc=2&src="+encodeURIComponent(item['europeana:object'])
+					newimg.src = "http://social.apps.lv/image.php?w=150&zc=2&src="+encodeURIComponent(item['europeana:object'])
 					newimg.onload = function(){
 						imagesLoaded++
 						var subjects = []
@@ -76,7 +76,7 @@ function load_images(){
 							"' data-creator='"+escape(item['dc:creator'])+
 							"' data-imgsrc='"+escape(item['europeana:object'].replace(/\s/g,"%20"))+
 							"' data-title='"+escape(item['dc:title'])+
-							"' src='http://openshift.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
+							"' src='http://social.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
 							"' /></a></li>")
 						if(handler) handler.wookmarkClear()
 						wookmarking()
@@ -111,7 +111,7 @@ $(function(){
 	})
 	$("#tiles").on("click", ".imagepopup", function(){
 		history.pushState(null, null, "/item/"+unescape($(this).children("img").data("originaluri")).replace("http://www.europeana.eu/resolve/record/","")+"?q="+escape(searchTerm))
-		$("#popup_img").css('background-image', 'url(http://openshift.apps.lv/image.php?donotscale=1&cc=333&w=470&h=470&zc=2&src='+encodeURIComponent(unescape($(this).children("img").data("imgsrc")))+')')
+		$("#popup_img").css('background-image', 'url(http://social.apps.lv/image.php?donotscale=1&cc=333&w=470&h=470&zc=2&src='+encodeURIComponent(unescape($(this).children("img").data("imgsrc")))+')')
 		if($(this).children("img").data("title") != undefined){
 			$("#popup_img_title").html(unescape($(this).children("img").data("title")))
 			$("#datacountry").html(unescape($(this).children("img").data("country").capitalize()))
