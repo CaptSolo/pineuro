@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo isset($_GET['q'])? ($_GET['q']." - "):""; ?>Europ.in - explore and share Europeana content</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&amp;subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/assets/css/reset.css" />
 	<link rel="stylesheet" href="/assets/css/style.css?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT']."/assets/css/style.css"); ?>" />
 	<link rel="stylesheet" href="/assets/css/bootstrap.css" />
@@ -14,12 +14,12 @@
 	if(isset($_GET['itemid'])):
 		$ch = curl_init("http://europ.in/request_object.php?uri=".rawurlencode("http://www.europeana.eu/portal/record/".$_GET['itemid'].".json?wskey=HTMQFSCKKB"));
 		curl_setopt_array($ch, array(
-			CURLOPT_HEADER => 0,
+			CURLOPT_HEADER 				 => 0,
 			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_TIMEOUT => 40,
+			CURLOPT_TIMEOUT 			 => 40,
 			CURLOPT_FOLLOWLOCATION => 1
 		));
-		$data = curl_exec($ch);
+		$data 		= curl_exec($ch);
 		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if($httpcode >= 200 && $httpcode < 400):
 			$data = (array)json_decode($data);
