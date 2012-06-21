@@ -63,6 +63,8 @@ function load_images(){
 							})
 						} else if(typeof(item['dc:subject']) == "string"){
 							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'].replace("'","%27"))+"'>"+item['dc:subject']+"</a>")
+						} else {
+							subjects.push("undefined")
 						}
 						imagesLoaded++
 						$("#tiles").append(
