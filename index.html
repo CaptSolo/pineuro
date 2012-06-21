@@ -60,14 +60,14 @@
 				//"da Vinci",
 				"hiroshige", "hokusai", "netsuke", "inro", "tsuba", "kakiemon", "kimono", // recommended by @DavidHaskiya
 				"who: Carl Curman",
-				"peintures AND who: gustave courbet",
-				"peintures AND who: jacques louis david",
-				"who: johannes vermeer"
+				"peintures AND who: Gustave Courbet",
+				"peintures AND who: Jacques Louis David",
+				"who: Johannes Vermeer"
 			])
 			var examples = []
 			for(i = 0; i <= 2; i++){
 				var item = examplelist.getItem()
-				examples.push('<a href="/search?q='+encodeURIComponent(item)+'">'+item+'</a>')
+				examples.push('"<a href="/search?q='+encodeURIComponent(item)+'">'+item+'</a>"')
 			}
 			$(function(){
 				$(".featured").append(examples.join(", "))
