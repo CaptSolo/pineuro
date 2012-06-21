@@ -120,9 +120,10 @@ $(function(){
 			$("#datadataprovider").html(unescape($(this).children("img").data("dataprovider")))
 			if($(this).children("img").data("creator") != "undefined"){
 				$("#datacreator").prev("lh").show()
-				$("#datacreator").html(unescape($(this).children("img").data("creator")))
+				$("#datacreator").html(unescape($(this).children("img").data("creator"))).show()
 			} else {
 				$("#datacreator").prev("lh").hide()
+				$("#datacreator").hide()
 			}
 			$("#dataoriginaluri").html('<a target="_blank" href="'+unescape($(this).children("img").data("originaluri"))+'">view this item at Europeana</a>')
 			if($(this).children("img").data("subjects").length){
