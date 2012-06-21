@@ -72,6 +72,7 @@ function load_images(){
 							"\" data-description='"+encodeURIComponent(item['dc:description'])+
 							"' data-originaluri='"+escape(item['europeana:uri'])+
 							"' data-provider='"+escape(item['europeana:provider'])+
+							"' data-dataprovider='"+escape(item['europeana:dataProvider'])+
 							"' data-country='"+escape(item['europeana:country'])+
 							"' data-creator='"+escape(item['dc:creator'])+
 							"' data-imgsrc='"+escape(item['europeana:object'].replace(/\s/g,"%20"))+
@@ -116,6 +117,7 @@ $(function(){
 			$("#popup_img_title").html(unescape($(this).children("img").data("title")))
 			$("#datacountry").html(unescape($(this).children("img").data("country").capitalize()))
 			$("#dataprovider").html(unescape($(this).children("img").data("provider")))
+			$("#datadataprovider").html(unescape($(this).children("img").data("dataprovider")))
 			if($(this).children("img").data("creator") != "undefined"){
 				$("#datacreator").prev("lh").show()
 				$("#datacreator").html(unescape($(this).children("img").data("creator")))

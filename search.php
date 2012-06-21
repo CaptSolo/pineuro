@@ -60,6 +60,8 @@ endif;
 					<lh>Country:</lh>
 					<li id="datacountry"></li>
 					<lh>Data provider:</lh>
+					<li id="datadataprovider"></li>
+					<lh>Provider:</lh>
 					<li id="dataprovider"></li>
 					<lh>Europeana:</lh>
 					<li id="dataoriginaluri"></li>
@@ -84,12 +86,13 @@ endif;
 ?>
 	<script>
 		$(function(){
-			$.getJSON("http://www.europeana.eu/portal/record/<?php echo $_GET['itemid']; ?>.json?wskey=HTMQFSCKKB&callback=?", function(item){
+			$.getJSON("/request_object.php?uri="+encodeURIComponent("http://www.europeana.eu/portal/record/<?php echo $_GET['itemid']; ?>.json?wskey=HTMQFSCKKB&callback=?"), function(item){
 				$("#popup_img").css('background-image', 'url(http://social.apps.lv/image.php?cc=333&w=470&h=470&zc=2&src='+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20"))+')')
 				if(item['dc:title'] != undefined){
 					$("#popup_img_title").html(item['dc:title'])
 					$("#datacountry").html(item['europeana:country'].capitalize())
 					$("#dataprovider").html(item['europeana:provider'])
+					$("#datadataprovider").html(item['europeana:dataProvider'])
 					if(item['dc:creator'] != undefined){
 						$("#datacreator").prev("lh").show()
 						$("#datacreator").html(item['dc:creator'])
