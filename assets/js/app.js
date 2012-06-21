@@ -78,7 +78,7 @@ function load_images(){
 							"' data-country='"+escape(item['europeana:country'])+
 							"' data-creator='"+escape(item['dc:creator'])+
 							"' data-rights='"+escape(item['dc:rights'])+
-							"' data-licence='"+escape(item['europeana:rights'])+
+							"' data-license='"+escape(item['europeana:rights'])+
 							"' data-imgsrc='"+escape(item['europeana:object'].replace(/\s/g,"%20"))+
 							"' data-title='"+escape(item['dc:title'])+
 							"' src='http://social.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
@@ -134,6 +134,13 @@ $(function(){
 			} else {
 				$("#datacreator").prev("lh").hide()
 				$("#datacreator").hide()
+			}
+			if($(this).children("img").data("license") != "undefined"){
+				$("#datalicense").prev("lh").show()
+				$("#datalicense").html("<a href='"+unescape($(this).children("img").data("license"))+"'>"+unescape($(this).children("img").data("license"))+"</a>").show()
+			} else {
+				$("#datalicense").prev("lh").hide()
+				$("#datalicense").hide()
 			}
 			if($(this).children("img").data("rights") != "undefined"){
 				$("#datarights").prev("lh").show()

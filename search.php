@@ -69,6 +69,8 @@ endif;
 					<li id="datasubjects"></li>
 					<lh>Rights:</lh>
 					<li id="datarights"></li>
+					<lh>License:</lh>
+					<li id="datalicense"></li>
 				</ul>
 			</div>
 		</div>
@@ -114,6 +116,13 @@ endif;
 					} else {
 						$("#datarights").prev("lh").hide()
 						$("#datarights").hide()
+					}
+					if(item['europeana:rights'] != undefined){
+						$("#datalicense").prev("lh").show()
+						$("#datalicense").html("<a href='"+item['dc:rights']+"'>"+item['dc:rights']+"</a>").show()
+					} else {
+						$("#datalicense").prev("lh").hide()
+						$("#datalicense").hide()
 					}
 					$("#dataoriginaluri").html('<a target="_blank" href="'+item['europeana:uri']+'">view this item at Europeana</a>')
 					var subjects = []
