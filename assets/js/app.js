@@ -76,6 +76,7 @@ function load_images(){
 							"' data-country='"+escape(item['europeana:country'])+
 							"' data-creator='"+escape(item['dc:creator'])+
 							"' data-rights='"+escape(item['dc:rights'])+
+							"' data-licence='"+escape(item['europeana:rights'])+
 							"' data-imgsrc='"+escape(item['europeana:object'].replace(/\s/g,"%20"))+
 							"' data-title='"+escape(item['dc:title'])+
 							"' src='http://social.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
