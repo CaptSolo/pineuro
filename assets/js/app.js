@@ -75,6 +75,7 @@ function load_images(){
 							"' data-dataprovider='"+escape(item['europeana:dataProvider'])+
 							"' data-country='"+escape(item['europeana:country'])+
 							"' data-creator='"+escape(item['dc:creator'])+
+							"' data-rights='"+escape(item['dc:rights'])+
 							"' data-imgsrc='"+escape(item['europeana:object'].replace(/\s/g,"%20"))+
 							"' data-title='"+escape(item['dc:title'])+
 							"' src='http://social.apps.lv/image.php?w=150&zc=3&src="+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20").replace("'","%27"))+
@@ -117,13 +118,26 @@ $(function(){
 			$("#popup_img_title").html(unescape($(this).children("img").data("title")))
 			$("#datacountry").html(unescape($(this).children("img").data("country").capitalize()))
 			$("#dataprovider").html(unescape($(this).children("img").data("provider")))
-			$("#datadataprovider").html(unescape($(this).children("img").data("dataprovider")))
+			if($(this).children("img").data("dataprovider") != "undefined"){
+				$("#datadataprovider").prev("lh").show()
+				$("#datadataprovider").html(unescape($(this).children("img").data("dataprovider"))).show()
+			} else {
+				$("#datadataprovider").prev("lh").hide()
+				$("#datadataprovider").hide()
+			}
 			if($(this).children("img").data("creator") != "undefined"){
 				$("#datacreator").prev("lh").show()
 				$("#datacreator").html(unescape($(this).children("img").data("creator"))).show()
 			} else {
 				$("#datacreator").prev("lh").hide()
 				$("#datacreator").hide()
+			}
+			if($(this).children("img").data("rights") != "undefined"){
+				$("#datarights").prev("lh").show()
+				$("#datarights").html(unescape($(this).children("img").data("rights"))).show()
+			} else {
+				$("#datarights").prev("lh").hide()
+				$("#datarights").hide()
 			}
 			$("#dataoriginaluri").html('<a target="_blank" href="'+unescape($(this).children("img").data("originaluri"))+'">view this item at Europeana</a>')
 			if($(this).children("img").data("subjects").length){

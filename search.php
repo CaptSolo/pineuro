@@ -67,6 +67,8 @@ endif;
 					<li id="dataoriginaluri"></li>
 					<lh>Subjects:</lh>
 					<li id="datasubjects"></li>
+					<lh>Rights:</lh>
+					<li id="datarights"></li>
 				</ul>
 			</div>
 		</div>
@@ -92,12 +94,26 @@ endif;
 					$("#popup_img_title").html(item['dc:title'])
 					$("#datacountry").html(item['europeana:country'].capitalize())
 					$("#dataprovider").html(item['europeana:provider'])
-					$("#datadataprovider").html(item['europeana:dataProvider'])
+					if(item['europeana:dataProvider'] != undefined){
+						$("#datadataprovider").prev("lh").show()
+						$("#datadataprovider").html(item['europeana:dataProvider']).show()
+					} else {
+						$("#datadataprovider").prev("lh").hide()
+						$("#datadataprovider").hide()
+					}
 					if(item['dc:creator'] != undefined){
 						$("#datacreator").prev("lh").show()
 						$("#datacreator").html(item['dc:creator'])
 					} else {
 						$("#datacreator").prev("lh").hide()
+						$("#datacreator").hide()
+					}
+					if(item['dc:rights'] != undefined){
+						$("#datarights").prev("lh").show()
+						$("#datarights").html(item['dc:rights'])
+					} else {
+						$("#datarights").prev("lh").hide()
+						$("#datarights").hide()
 					}
 					$("#dataoriginaluri").html('<a target="_blank" href="'+item['europeana:uri']+'">view this item at Europeana</a>')
 					var subjects = []
