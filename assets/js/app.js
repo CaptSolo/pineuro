@@ -143,11 +143,12 @@ $(function(){
 				$("#datarights").hide()
 			}
 			$("#dataoriginaluri").html('<a target="_blank" href="'+unescape($(this).children("img").data("originaluri"))+'">view this item at Europeana</a>')
-			if($(this).children("img").data("subjects").length){
+			if($(this).children("img").data("subjects") != "undefined"){
 				$("#datasubjects").prev("lh").show()
-				$("#datasubjects").html(decodeURIComponent($(this).children("img").data("subjects")))
+				$("#datasubjects").html(decodeURIComponent($(this).children("img").data("subjects"))).show()
 			} else {
 				$("#datasubjects").prev("lh").hide()
+				$("#datasubjects").hide()
 			}
 			if($(this).children("img").data("description") != "undefined"){
 				$("#datadescription").html(decodeURIComponent($(this).children("img").data("description")))
