@@ -3,30 +3,30 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title><?php echo isset($_GET['q'])? ($_GET['q']." - "):""; ?>Europ.in - explore and share Europeana</title>
+	<title><?php echo isset($_GET['q'])? ($_GET['q']." - "):""; ?>Europ.in - explore and share Europeana content</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&amp;subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/assets/css/reset.css" />
-	<link rel="stylesheet" href="/assets/css/style.css" />
+	<link rel="stylesheet" href="/assets/css/style.css?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT']."/assets/css/style.css"); ?>" />
 	<link rel="stylesheet" href="/assets/css/bootstrap.css" />
 	<link rel="stylesheet" href="/assets/fancybox/jquery.fancybox-1.3.4.css" />
 	<?php
 	if(isset($_GET['itemid'])):
-		$ch = curl_init("http://www.europeana.eu/portal/record/".$_GET['itemid'].".json?wskey=HTMQFSCKKB");
+		$ch = curl_init("http://europ.in/request_object.php?uri=".rawurlencode("http://www.europeana.eu/portal/record/".$_GET['itemid'].".json?wskey=HTMQFSCKKB"));
 		curl_setopt_array($ch, array(
-			CURLOPT_HEADER => 0,
+			CURLOPT_HEADER 				 => 0,
 			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_TIMEOUT => 40,
+			CURLOPT_TIMEOUT 			 => 40,
 			CURLOPT_FOLLOWLOCATION => 1
 		));
-		$data = curl_exec($ch);
+		$data 		= curl_exec($ch);
 		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if($httpcode >= 200 && $httpcode < 400):
 			$data = (array)json_decode($data);
 	?>
 	<meta property="og:title" content="<?php echo str_replace(array("\n","\r"), "", $data["dc:title"]); ?>" />
 	<meta property="og:image" content="<?php echo $data["europeana:object"]; ?>" />
-	<meta property="og:description" content="<?php echo str_replace(array("\n","\r"), "", (string)$data["dc:description"]); ?>" />
+	<meta property="og:description" content="<?php echo str_replace(array("\n","\r",'"',"'"), "", is_array($data["dc:description"])?$data["dc:description"][0]:$data["dc:description"]); ?>" />
 <?php
 	endif;
 endif;
@@ -40,6 +40,7 @@ endif;
 			<button id="s" class="btn btn-small">Search</button>
 		</form>
 		<div id="count"></div>
+		<a href="http://europeana.eu" id="header_europeana"></a>
 	</div>
 	<div id="main" class="clearfix">
 		<ul id="tiles"></ul>
@@ -51,18 +52,25 @@ endif;
 			</div>
 			<div id="popup_side">
 				<div id="pinbutton">
-
 				</div>
 				<ul>
 					<li id="datadescription"></li>
+					<lh>Creator:</lh>
+					<li id="datacreator"></li>
 					<lh>Country:</lh>
 					<li id="datacountry"></li>
+					<lh>Data provider:</lh>
+					<li id="datadataprovider"></li>
 					<lh>Provider:</lh>
 					<li id="dataprovider"></li>
 					<lh>Europeana:</lh>
 					<li id="dataoriginaluri"></li>
 					<lh>Subjects:</lh>
 					<li id="datasubjects"></li>
+					<lh>Rights:</lh>
+					<li id="datarights"></li>
+					<lh>License:</lh>
+					<li id="datalicense"></li>
 				</ul>
 			</div>
 		</div>
@@ -73,7 +81,7 @@ endif;
 	<script src="/assets/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
 	<script src="/assets/js/wookmark.js"></script>
 	<script src="http://balupton.github.com/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
-	<script src="/assets/js/app.js"></script>
+	<script src="/assets/js/app.js?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT']."/assets/js/app.js"); ?>"></script>
 	<script>
 		var searchTerm = "<?php echo isset($_GET['q'])?$_GET['q']:""; ?>";
 	</script>
@@ -82,20 +90,48 @@ endif;
 ?>
 	<script>
 		$(function(){
-			$.getJSON("http://www.europeana.eu/portal/record/<?php echo $_GET['itemid']; ?>.json?wskey=HTMQFSCKKB&callback=?", function(item){
+			$.getJSON("/request_object.php?uri="+encodeURIComponent("http://www.europeana.eu/portal/record/<?php echo $_GET['itemid']; ?>.json?wskey=HTMQFSCKKB&callback=?"), function(item){
 				$("#popup_img").css('background-image', 'url(http://social.apps.lv/image.php?cc=333&w=470&h=470&zc=2&src='+encodeURIComponent(item['europeana:object'].replace(/\s/g,"%20"))+')')
 				if(item['dc:title'] != undefined){
 					$("#popup_img_title").html(item['dc:title'])
-					$("#datacountry").html(item['dc:title'])
-					$("#dataprovider").html(item['europeana:country'].capitalize())
-					$("#dataoriginaluri").html('<a target="_blank" href="'+item['europeana:uri']+'">'+'view this item at Europeana'+'</a>')
+					$("#datacountry").html(item['europeana:country'].capitalize())
+					$("#dataprovider").html(item['europeana:provider'])
+					if(item['europeana:dataProvider'] != undefined){
+						$("#datadataprovider").prev("lh").show()
+						$("#datadataprovider").html(item['europeana:dataProvider']).show()
+					} else {
+						$("#datadataprovider").prev("lh").hide()
+						$("#datadataprovider").hide()
+					}
+					if(item['dc:creator'] != undefined){
+						$("#datacreator").prev("lh").show()
+						$("#datacreator").html(item['dc:creator'])
+					} else {
+						$("#datacreator").prev("lh").hide()
+						$("#datacreator").hide()
+					}
+					if(item['dc:rights'] != undefined){
+						$("#datarights").prev("lh").show()
+						$("#datarights").html(item['dc:rights'])
+					} else {
+						$("#datarights").prev("lh").hide()
+						$("#datarights").hide()
+					}
+					if(item['europeana:rights'] != undefined){
+						$("#datalicense").prev("lh").show()
+						$("#datalicense").html("<a href='"+item['dc:rights']+"'>"+item['dc:rights']+"</a>").show()
+					} else {
+						$("#datalicense").prev("lh").hide()
+						$("#datalicense").hide()
+					}
+					$("#dataoriginaluri").html('<a target="_blank" href="'+item['europeana:uri']+'">view this item at Europeana</a>')
 					var subjects = []
 					if(typeof(item['dc:subject']) == "object"){
 						$.each(item['dc:subject'], function(i){
-							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i])+"'>"+item['dc:subject'][i]+"</a>")
+							subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'][i].replace("'","%27"))+"'>"+item['dc:subject'][i]+"</a>")
 						})
 					} else if(typeof(item['dc:subject']) == "string") {
-						subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'])+"'>"+item['dc:subject']+"</a>")
+						subjects.push("<a href='/search?q="+encodeURIComponent(item['dc:subject'].replace("'","%27"))+"'>"+item['dc:subject']+"</a>")
 					}
 					$("#datasubjects").html(subjects.join(", "));
 					if(item['dc:description'] != undefined){
@@ -109,7 +145,7 @@ endif;
 					$("#popup_img_title").html("")
 				}
 				$.fancybox(
-					$("#popup").html(),
+					$("#popup").parent("div").html(),
 					{
 						'width'			: 800,
 						'height'		: 500,
@@ -118,7 +154,10 @@ endif;
 						'transitionIn'	: 'elastic',
 						'transitionOut'	: 'elastic',
 						'easingIn'		: 'easeOutBack',
-						'easingOut'		: 'easeInBack'
+						'easingOut'		: 'easeInBack',
+						'onClosed'		: function() {
+							history.pushState(null, null, "/search?q="+encodeURIComponent(searchTerm))
+						}
 					}
 				)
 			})
@@ -127,5 +166,13 @@ endif;
 <?
 	endif;
 ?>
+
+<script>
+	var _gaq=[['_setAccount','UA-32161057-1'],['_trackPageview']];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+<div id="loading_status"></div>
 </body>
 </html>

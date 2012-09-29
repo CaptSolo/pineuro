@@ -3,13 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Europ.in - explore and share Europeana</title>
+	<title>Europ.in - explore and share Europeana content</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans&amp;subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/assets/css/reset.css">
 	<link rel="stylesheet" href="/assets/css/style.css">
 	<link rel="stylesheet" href="/assets/css/bootstrap.css">
 	<link rel="stylesheet" href="/assets/fancybox/jquery.fancybox-1.3.4.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>
+		var _gaq=[['_setAccount','UA-32161057-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
 </head>
 <body>
 	<div class="start">
@@ -22,13 +29,56 @@
 				<button id="s" class="search-button btn btn-info">Search</button>
 			</form>
 		</div>
+		<script>
+			function RandomList(list, alias) {
+				if (!list) { return; }
+				var length = list.length;
+				this.indexes = [];
+				this.remainingItems = function(){
+					return this.indexes.length;
+				};
+				this[alias || 'getItem'] = function(){
+					var rand = Math.floor(Math.random() * this.indexes.length),
+						item = list[this.indexes[rand]];
+					this.indexes.splice(rand, 1);
+					return item;
+				};
+				while (length--) {
+					this.indexes[this.indexes.length] = length;
+				}
+			}
+			var examplelist = new RandomList([
+				//"Eiffel Tower",
+				"Saldus",
+				"Rīga",
+				//"Salvador Dali",
+				//"Sigmund Freud",
+				"Latvija",
+				//"flight",
+				//"computer",
+				//"flower",
+				//"da Vinci",
+				"hiroshige", "hokusai", "netsuke", "inro", "tsuba", "kakiemon", "kimono", // recommended by @DavidHaskiya
+				"who: Carl Curman",
+				"peintures AND who: Gustave Courbet",
+				"peintures AND who: Jacques Louis David",
+				"who: Johannes Vermeer"
+			])
+			var examples = []
+			for(i = 0; i <= 2; i++){
+				var item = examplelist.getItem()
+				examples.push('"<a href="/search?q='+encodeURIComponent(item)+'">'+item+'</a>"')
+			}
+			$(function(){
+				$(".featured").append(examples.join(", "))
+			})
+		</script>
 		<div class="featured">
-			Examples: <a href="/search?q=Eiffel+Tower">Eiffel Tower</a>, <a href="/search?q=Salvador+Dali">Salvador Dali</a>, <a href="/search?q=Sigmund+Freud">Sigmund Freud</a>
+			Examples:
 		</div>
 		<div class="about">
-			<a href="/about">About</a>
+			<a href="http://europeana.eu">Powered by Europeana</a> &bull; <a href="/about">About</a>
 		</div>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 </body>
 </html>
