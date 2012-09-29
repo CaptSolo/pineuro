@@ -163,7 +163,7 @@ endif;
 			})
 		})
 	</script>
-<?
+<?php
 	endif;
 ?>
 
